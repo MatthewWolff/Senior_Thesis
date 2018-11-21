@@ -3,7 +3,7 @@ set -e -x
 GLUST=/mnt/gluster/mwolff3
 for file in `ls $GLUST/*.fastq.tar.gz`; do # list all files 
   if [[ ! -f $GLUST/${file%.*}_filtered.tgz ]]; then # make sure hasn't been filtered 
-    [[ ! $file = *2005* ]] && echo `basename $file` # ignore 2005 data
+    echo `basename $file .fastq.tar.gz`
   fi  
 done > unfiltered_files
 METAGENOMES=$(cat unfiltered_files) && rm unfiltered_files
@@ -28,7 +28,6 @@ echo "untarred bbmap" && echo
 echo "beginning filtering..."
 mkdir -p metagenomes/
 for raw in $METAGENOMES; do
-  raw=$(sed -e "s/\..*//" <<< $raw) # clean filename
   tar -xzf $GLUST/${raw}.fastq.tar.gz -C metagenomes/ # transfer in
   input=metagenomes/${raw}.fastq; output=${raw}_filtered.fastq
   bbduk.sh in=$input out=$output qtrim=r trimq=10 maq=10 # filter! 
