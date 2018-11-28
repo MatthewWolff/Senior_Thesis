@@ -1,0 +1,10 @@
+> transferred all files from the file share server over to gluster 11/19
+> wrote script (filter.sh) to move files from gluster to a job, filter, then put them back on gluster. realized the data from 2005 was trash. ran filtering overnight 11/19
+> looked into testing the filtering quality and assessing the filtering parameters. Liz told me about fastp, which she uses within her EBPR-MAGs repo. wrote script to create_samples on gluster 11/20
+> wrote a script to compare filtering between bbduk and fastp (test_filtering.sh). Running it overnight 11/20
+> decided to compare 3 filters on samples instead of just 2 11/22
+> found out about queuing jobs. sweet lord. reworked filtering script and created ~/lists folder 11/26
+> began writing mapping script 11/27
+> figured out how to do a cartesian product in bash lol 11/27 -- glust 'ls *fna' | sed 's/^/1\t/' > ~/lists/refGenomes; glust 'ls *filtered.fastq.tgz' | sed 's/^/1\t/' > ~/lists/filtered_files; join -j 1 -t $'\t' ~/lists/refGenomes ~/lists/filtered_files | cut -d $'\t' -f 2-
+> finished writing mapping script and queue all jobs. error log shows that things are proceeding correctly up until sorting at least 11/27
+> added a verbose new command to update all scripts + jobs in repo 11/27

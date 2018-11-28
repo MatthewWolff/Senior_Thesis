@@ -54,6 +54,8 @@ co()
 }
 update_thesis()
 {
+  # keep zshrc and notes up to date
+  cp ~/.notes ~/.zshrc ~/Senior_Thesis/CHTC/
   # determine changes
   scripts=$(diff -rq ~/desman_scripts ~/Senior_Thesis/CHTC/scripts | \
               perl -nle "print $& if m{(?<=/).+\.sh(?= a)}")
