@@ -52,6 +52,25 @@ co()
   out_file=$directory/$out_file
   cat $out_file && echo $out_file
 }
+update_thesis()
+{
+  # determine changes
+  scripts=$(diff -rq ~/desman_scripts ~/Senior_Thesis/CHTC/scripts | \
+              perl -nle "print $& if m{(?<=/).+\.sh(?= a)}")
+  jobs=$(diff -rq ~/jobs ~/Senior_Thesis/CHTC/jobs | perl -nle "print $& if m{(?<=/).+\.sub(?= a)}")
+  # copy all scripts over with their corresponding .sub. Ignores jobs differences
+  cp ~/desman_scripts/* ~/Senior_Thesis/CHTC/scripts/
+  for s in `\ls ~/desman_scripts`;do cp ~/jobs/`basename $s .sh`.sub ~/Senior_Thesis/CHTC/jobs/;done
+  # announce changes
+  if [[ ! -z $scripts ]]; then 
+    echo -n "changed scripts: "
+    for s in $scripts; do echo -n "$(basename $s) "; done; echo
+  fi
+  if [[ ! -z $jobs ]]; then
+    echo -n "changed jobs: "
+    for j in $jobs; do echo -n "$(basename $j) "; done; echo
+  fi
+}
 notes(){ if [[ -z $1 ]]; then echo -n "\033[33m" && cat ~/.notes; else echo "> $*" >> ~/.notes; fi;}
 echo "\033[1m\033[37mHey! Remember to take notes on what you're doing --- notes <notes> <date>"
 
@@ -59,7 +78,7 @@ echo "\033[1m\033[37mHey! Remember to take notes on what you're doing --- notes 
 alias daddy='sudo'
 alias theme='source ~/.zshrc' # picks a random theme if curr theme is "random"
 alias rand='[[ $ZSH_THEME = random ]] || settheme random; source ~/.zshrc'
-alias shrink='export PS1="\u > "' # temporarily shrinks the prompt so that it doesn't show the working directory
+alias shrink='export PS1="\u > "' # temporarily shrink prompt
 alias search='grep -rwn * -e '
 alias push='git push -u origin master'
 alias pull='git pull'
@@ -67,6 +86,7 @@ alias gaa='git add --all'
 alias 'gcn!'='git commit -v --no-edit --amend'  # retroactively commit files to last commit
 alias force='git push -u -f origin master'
 alias 'oops!'='gaa && gcn! && force'
+alias gits='git status'
 alias ls='ls --color'  # ls -G on mac
 alias grep='grep --color=auto' 
 alias rc='vim ~/.zshrc'

@@ -13,7 +13,7 @@ when_to_transfer_output	= ON_EXIT
 
 # computational resources for each job
 request_cpus		= 4
-request_memory		= 50GB
+request_memory		= 10GB
 request_disk		= 50GB
 
 queue reference, metagenome from /home/mwolff3/lists/mapping_combos

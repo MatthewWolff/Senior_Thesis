@@ -28,7 +28,7 @@ cp $GLUST/$REF refgenome/
 tar -xzf $GLUST/${META}.tgz -C metagenome/
 
 echo "beginning mapping/sorting pipeline"
-MAP_PARAMS='outm=stdout idtag minid=0.9 nodisk -Xmx48g' # minid to capture all strains 
+MAP_PARAMS='outm=stdout idtag minid=0.9 nodisk -Xmx10g' # minid to capture all strains 
 bbmap.sh ref=refgenome/$REF in=metagenome/$META $MAP_PARAMS | samtools sort - -o $OUT
 tar -czvf $GLUST/mapping_results/${OUT}.tgz $OUT --remove-files
 echo "done. created $OUT!"

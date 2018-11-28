@@ -1,0 +1,18 @@
+universe			= vanilla
+log				= /home/mwolff3/submitted/logs/install_samtools_$(Cluster).log
+error				= /home/mwolff3/submitted/errs/install_samtools_$(Cluster).err
+output				= /home/mwolff3/submitted/output/install_samtools_$(Cluster).out
+executable			= /home/mwolff3/scripts/install_samtools.sh
+arguments			= $(Process)
+# transfer_input_files 	=  # unused bc we're using Gluster
+
+should_transfer_files	= YES
+when_to_transfer_output	= ON_EXIT
+getenv 			= true
+
+# computational resources for each job
+request_cpus		= 1
+request_memory		= 75MB
+request_disk		= 50MB
+
+queue
