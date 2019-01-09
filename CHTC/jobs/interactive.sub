@@ -8,7 +8,7 @@ error 		= /home/mwolff3/submitted/errs/interactive.err
 +IsBuildJob = true
 requirements = (OpSysMajorVer =?= 6) && ( IsBuildSlot == true )
 
-transfer_input_files = testing 
+# transfer_input_files = testing 
 
 request_cpus	= 1
 request_memory 	= 10GB

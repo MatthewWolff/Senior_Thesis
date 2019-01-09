@@ -9,9 +9,11 @@ plugins=(
 #### USER CONFIGURATION
 source $ZSH/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh # Valid command highlighter
 source $ZSH/oh-my-zsh.sh
+export PATH=/home/mwolff3/.scripts:$PATH
 
 #### FUNCTIONS
 cd(){ builtin cd $@ && ls; }
+gold(){ echo "\033[33m$*\033[0m"; }
 addalias()
 {
   new_alias="alias $(echo $1 | sed -e "s/=/='/" -e "s/$/'/")"
@@ -22,6 +24,19 @@ settheme()
 {
   sed -i '' -e "s/ZSH_THEME=\"[a-z]*\"/ZSH_THEME=\"$1\"/" ~/.zshrc
   source ~/.zshrc
+}
+aliases()
+{
+  # aliases, bc don't want to see all the zsh ones
+  gold 'aliases:'
+  perl -nle "print $& if m{(?<=^alias )'?[a-z_\!]+'?='.*?'}" ~/.zshrc | sed "s/^/  /"
+  # couldn't figure out how to print out only zshrc function definitions with regex :(
+  gold $'\nfunctions --- type "funcs" to see full definitions:'
+  perl -nle "print $& if m{^[a-z_]+\(\)}" ~/.zshrc | sed "s/^/  /"
+}
+funcs()
+{ 
+  for f in `perl -nle "print $& if m{^[a-z_]+(?=\(\))}" ~/.zshrc`; do which $f; done
 }
 make_job()
 {
@@ -57,12 +72,12 @@ update_thesis()
   # keep zshrc and notes up to date
   cp ~/.notes ~/.zshrc ~/Senior_Thesis/CHTC/
   # determine changes
-  scripts=$(diff -rq ~/desman_scripts ~/Senior_Thesis/CHTC/scripts | \
+  scripts=$(diff -rq ~/scripts ~/Senior_Thesis/CHTC/scripts | \
               perl -nle "print $& if m{(?<=/).+\.sh(?= a)}")
   jobs=$(diff -rq ~/jobs ~/Senior_Thesis/CHTC/jobs | perl -nle "print $& if m{(?<=/).+\.sub(?= a)}")
   # copy all scripts over with their corresponding .sub. Ignores jobs differences
-  cp ~/desman_scripts/* ~/Senior_Thesis/CHTC/scripts/
-  for s in `\ls ~/desman_scripts`;do cp ~/jobs/`basename $s .sh`.sub ~/Senior_Thesis/CHTC/jobs/;done
+  cp ~/scripts/* ~/Senior_Thesis/CHTC/scripts/
+  for s in `\ls ~/scripts`;do cp ~/jobs/`basename $s .sh`.sub ~/Senior_Thesis/CHTC/jobs/;done
   # announce changes
   if [[ ! -z $scripts ]]; then 
     echo -n "changed scripts: "

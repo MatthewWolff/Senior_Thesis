@@ -8,3 +8,5 @@
 > figured out how to do a cartesian product in bash lol 11/27 -- glust 'ls *fna' | sed 's/^/1\t/' > ~/lists/refGenomes; glust 'ls *filtered.fastq.tgz' | sed 's/^/1\t/' > ~/lists/filtered_files; join -j 1 -t $'\t' ~/lists/refGenomes ~/lists/filtered_files | cut -d $'\t' -f 2-
 > finished writing mapping script and queue all jobs. error log shows that things are proceeding correctly up until sorting at least 11/27
 > added a verbose new command to update all scripts + jobs in repo 11/27
+> all the sorted bam files have been generated (first try lol). Added more DESMAN dependencies to the Dockerfile and will likely proceed into the actual DESMAN pipeline now 11/28
+> updated the install_samtool.sh script 1/08
