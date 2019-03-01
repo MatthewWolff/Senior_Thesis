@@ -10,3 +10,5 @@
 > added a verbose new command to update all scripts + jobs in repo 11/27
 > all the sorted bam files have been generated (first try lol). Added more DESMAN dependencies to the Dockerfile and will likely proceed into the actual DESMAN pipeline now 11/28
 > updated the install_samtool.sh script 1/08
+> began typing up desman writeup 2/21
+> horrific misunderstanding. ope. RIP thesis 3/1/2019
